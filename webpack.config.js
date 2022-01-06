@@ -15,11 +15,17 @@ module.exports = {
       template: './src/index.html',
       filename: 'index.html',
       favicon: 'assets/favicon.png',
-      title: 'Zappar Universal AR',
+      title: 'PYC AR Face mask',
       minify: {
         collapseWhitespace: true,
         minifyCSS: true,
       },
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/mask.html',
+      filename: 'mask.html',
+      favicon: 'assets/favicon.png',
+      title: 'PYC AR Face mask',
     }),
   ],
   devServer: {

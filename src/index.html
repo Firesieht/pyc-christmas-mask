@@ -1,17 +1,56 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,user-scalable=no,minimal-ui" />
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <head>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Russo+One&display=swap');
+        .content{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap:50px;
+            background-color: #817AA0;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Russo One', sans-serif;
+            color:white;
+            font-size: 64px;
+            text-align: center;
+        }
+        canvas{
+            display: none;
+        }
+        .image{
+            width: 512px;
+            height: 512px;
+        }
+        .butn, .butn:visited {
+            width: 200px;
 
+            border-radius: 25px;
+            border: solid 1px #CE3923;
+            background-color: #CE3923;
+            color:white;
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-top: 25px;
+            padding-bottom: 25px;
+        }
+        .butn:hover {
+            border: solid 1px #EC472F;
+            background-color: #EC472F;
+        }
+        .butn:visited {
+            border: solid 1px #CE3923;
+            background-color: #CE3923;
+        }
     </style>
-</head>
-
-<body>
-
-</body>
-
+    </head>
+    <body>
+        <div class="content">
+            <img class="image" src="https://drive.google.com/uc?export=view&id=14xy0x9PhImbhRa-y_C575XFqS6WNPYYv">
+            <div style="width: 80%;">Christmas face masks from PYC</div>
+            <a style="text-decoration: none;" href="./mask.html"><div class="butn">Try it</div></a>
+        </div>
+    </body>
 </html>

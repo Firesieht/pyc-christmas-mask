@@ -2,39 +2,31 @@
 /* eslint-disable no-param-reassign */
 import * as BABYLON from 'babylonjs';
 import * as ZapparBabylon from '@zappar/zappar-babylonjs';
-import faceMeshTexture from '../assets/faceMeshTemplate.png';
+import faceMeshTexture from '../assets/4.png';
+import faceMeshTexture1 from "../assets/1.png"
+import faceMeshTexture2 from "../assets/2.png"
+import faceMeshTexture3 from "../assets/3.png"
+
 import 'babylonjs-loaders';
 import './index.sass';
 
-// The SDK is supported on many different browsers, but there are some that
-// don't provide camera access. This function detects if the browser is supported
-// For more information on support, check out the readme over at
-// https://www.npmjs.com/package/@zappar/zappar-babylonjs
 if (ZapparBabylon.browserIncompatible()) {
-  // The browserIncompatibleUI() function shows a full-page dialog that informs the user
-  // they're using an unsupported browser, and provides a button to 'copy' the current page
-  // URL so they can 'paste' it into the address bar of a compatible alternative.
   ZapparBabylon.browserIncompatibleUI();
-
-  // If the browser is not compatible, we can avoid setting up the rest of the page
-  // so we throw an exception here.
   throw new Error('Unsupported browser');
 }
 
-// Setup BabylonJS in the usual way
+let next = document.getElementById("next")
+let previous = document.getElementById("previous")
 const canvas = document.createElement('canvas');
 document.body.appendChild(canvas);
 
 const engine = new BABYLON.Engine(canvas, true);
 
 export const scene = new BABYLON.Scene(engine);
-// eslint-disable-next-line no-unused-vars
 const light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), scene);
 
-// Setup a Zappar camera instead of one of Babylon's cameras
 export const camera = new ZapparBabylon.Camera('ZapparCamera', scene);
 
-// Request the necessary permission from the user
 ZapparBabylon.permissionRequestUI().then((granted) => {
   if (granted) camera.start(true);
   else ZapparBabylon.permissionDeniedUI();
@@ -50,9 +42,48 @@ faceTracker.onVisible.bind(() => {
 faceTracker.onNotVisible.bind(() => {
   trackerTransformNode.setEnabled(false);
 });
+	
+
+
 
 const material = new BABYLON.StandardMaterial('mat', scene);
-material.diffuseTexture = new BABYLON.Texture(faceMeshTexture, scene);
+material.diffuseTexture = new BABYLON.Texture(faceMeshTexture1, scene);
+let cnt = document.getElementById("cnt")
+
+let a = 0
+let textures = [faceMeshTexture, faceMeshTexture1, faceMeshTexture2, faceMeshTexture3]
+document.addEventListener("DOMContentLoaded", () => {
+  if ( next != null){
+    next.onclick = function(){
+      if (a < textures.length-1){
+        a+=1
+      }
+      else{
+        a = 0
+      }
+      if (cnt != null){
+        cnt.innerText = "Mask №" + (a+1).toString()
+      } 
+    material.diffuseTexture = new BABYLON.Texture(textures[a], scene);
+    }
+  }
+  if (previous != null){
+    previous.onclick = function(){
+      if (a > 0){
+        a-=1
+      }
+      else{
+        a = textures.length-1
+      }
+      if (cnt != null){
+        cnt.innerText = "Mask №" + (a+1).toString()
+      } 
+      material.diffuseTexture = new BABYLON.Texture(textures[a], scene);
+    }
+  }
+
+});
+
 
 const faceMesh = new ZapparBabylon.FaceMeshGeometry('mesh', scene);
 faceMesh.parent = trackerTransformNode;
